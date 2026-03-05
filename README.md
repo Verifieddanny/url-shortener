@@ -64,6 +64,7 @@ Create a `.env` file in the root directory:
 ```
 MONGODB_URL=your_mongodb_connection_string
 SECRETE_KEY=your_jwt_secret_key
+BASE_URL=your_deployed_api_url  # on dev, it defaults to http://localhost:8080 is not include
 ```
 
 Generate a secure JWT secret:
