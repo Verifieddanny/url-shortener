@@ -2,6 +2,7 @@ import express from "express";
 import type { Application, Request, Response, NextFunction } from "express";
 import { connect } from "mongoose";
 import dotenv from "dotenv";
+import rateLimit from "express-rate-limit";
 import type { CustomError } from "./shared/types.js";
 import urlShortnerRouter from "./routes/url-shortner.js";
 import rootAccessRouter from "./routes/root-access.js";
@@ -10,6 +11,17 @@ import AuthRouter from "./routes/auth.js";
 dotenv.config();
 
 const app: Application = express();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  message: { message: "Too many requests, try again later" },
+});
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { message: "Too many login attempts" },
+});
 
 app.use(express.json());
 
@@ -23,14 +35,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/auth", AuthRouter);
+app.use(limiter);
+
+app.use("/auth", authLimiter, AuthRouter);
 app.use("/shorten", urlShortnerRouter);
 
 app.use("/", (_req: Request, res: Response) => {
   res.status(200).json({ message: "welcome to url shortner" });
 });
 
-app.use(rootAccessRouter);   
+app.use(rootAccessRouter);
 
 app.use(
   (
