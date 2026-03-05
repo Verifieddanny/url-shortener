@@ -24,12 +24,13 @@ app.use((req, res, next) => {
 });
 
 app.use("/auth", AuthRouter);
-app.use(rootAccessRouter);
 app.use("/shorten", urlShortnerRouter);
 
 app.use("/", (_req: Request, res: Response) => {
   res.status(200).json({ message: "welcome to url shortner" });
 });
+
+app.use(rootAccessRouter);   
 
 app.use(
   (
