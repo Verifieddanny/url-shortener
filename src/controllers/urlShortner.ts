@@ -38,7 +38,7 @@ export const shortenUrl = async (
     ) {
       return res.status(200).json({
         message: "shortened url exits",
-        url: `http://localhost:8080/${urlExists.shortCode}`,
+        url: `${process.env.BASE_URL || "http://localhost:8080"}/${urlExists.shortCode}`,
       });
     }
 
@@ -56,7 +56,7 @@ export const shortenUrl = async (
 
     res.status(201).json({
       message: "Shortend Url generated",
-      newUrl: `http://localhost:8080/${savedUrlLink.shortCode}`,
+      newUrl: `${process.env.BASE_URL || "http://localhost:8080"}/${savedUrlLink.shortCode}`,
       creatorData: {
         _id: creator?._id,
         username: creator?.username,

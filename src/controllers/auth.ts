@@ -157,7 +157,7 @@ export const getStats = async (
         click: LinkedUrl.click,
         createAt: LinkedUrl.createdAt,
         originalUrl: LinkedUrl.longUrl,
-        shortenedUrl: `http://localhost:8080/${LinkedUrl.shortCode}`,
+        shortenedUrl: `${process.env.BASE_URL || "http://localhost:8080"}/${LinkedUrl.shortCode}`,
       },
     });
   } catch (error) {
