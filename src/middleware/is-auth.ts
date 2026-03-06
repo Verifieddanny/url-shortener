@@ -14,7 +14,7 @@ export const isAuth = (req: AuthRequest, res: Response, next: NextFunction) => {
   const token = authHeader.split(" ")[1];
 
   if (!token) {
-    const error: CustomError = new Error("Not Authenticated");
+    const error: CustomError = new Error("Not Authenticated!");
     error.statusCode = 401;
     throw error;
   }

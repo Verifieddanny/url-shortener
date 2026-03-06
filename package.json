@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --loader=ts-node/esm --no-warnings 'tests/**/*.spec.ts' --timeout 25000 --exit",
     "dev": "tsx --watch --env-file=.env src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
@@ -14,9 +14,20 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/chai-as-promised": "^8.0.2",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^25.3.3",
+    "@types/sinon": "^21.0.0",
+    "@types/sinon-chai": "^4.0.0",
+    "chai": "^6.2.2",
+    "chai-as-promised": "^8.0.2",
+    "mocha": "^11.7.5",
+    "sinon": "^21.0.2",
+    "sinon-chai": "^4.0.1",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },

@@ -7,6 +7,7 @@ import type { CustomError } from "./shared/types.js";
 import urlShortnerRouter from "./routes/url-shortner.js";
 import rootAccessRouter from "./routes/root-access.js";
 import AuthRouter from "./routes/auth.js";
+import demoRouter from "./routes/demo.js";
 
 dotenv.config();
 
@@ -23,6 +24,12 @@ const authLimiter = rateLimit({
   message: { message: "Too many login attempts" },
 });
 
+const demoLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 60,
+  message: { message: "Too many requests on demo, try later again" },
+});
+
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -35,8 +42,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(limiter);
+app.use("/demo", demoLimiter, demoRouter);
 
+app.use(limiter);
 app.use("/auth", authLimiter, AuthRouter);
 app.use("/shorten", urlShortnerRouter);
 
