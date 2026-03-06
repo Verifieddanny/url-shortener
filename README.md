@@ -28,15 +28,18 @@ src/
 ├── controllers/
 │   ├── auth.ts            # Signup, login, and stats controllers
 │   └── urlShortner.ts     # URL shortening, redirect, and fetch all
+│   └── demo.ts            # demo URL shortening, and redirect
 ├── middleware/
 │   └── is-auth.ts         # JWT verification middleware
 ├── models/
 │   ├── user.ts            # User schema (name, username, email, password)
 │   └── url-shortner.ts    # URL schema (longUrl, shortCode, click, creator, expiresAt)
+│   └── demo.ts            # demo URL schema (longUrl, shortCode, expiresAt)
 ├── routes/
 │   ├── auth.ts            # Auth routes with input validation
 │   ├── url-shortner.ts    # Protected URL and analytics routes
 │   └── root-access.ts     # Public redirect route
+│   └── demo.ts            # Public demo redirect route (with temporary url shortening)
 ├── shared/
 │   └── types.ts           # Shared TypeScript interfaces and types
 └── index.ts               # App entry point, middleware setup, DB connection
@@ -247,6 +250,53 @@ Returns all shortened URLs created by the authenticated user.
   ]
 }
 ```
+
+### Demo Usage
+
+All Demo URL endpoints are public (no auth required):
+**(Note)** - the url generated are temporary for 2 days (after which they are gone)
+**(Note)** - the demo endpoints are ratelimited to 60 request in an hour
+
+### Demo URL Shortening
+
+```
+POST demo/shorten
+```
+
+| Field      | Type   | Required | Description                          |
+|------------|--------|----------|--------------------------------------|
+| url        | string | Yes      | Valid URL to shorten                 |
+
+**Response** `201 Created`
+
+```json
+{
+  "message": "demo url created",
+  "newUrl": "http://localhost:8080/demo/EvBaP",
+  "expiresAt": "2026-03-12T00:00:00.000Z"
+}
+```
+
+If the URL already exists and hasn't expired(in 2 days):
+
+**Response** `200 OK`
+
+```json
+{
+  "message": "url exits",
+  "url": "http://localhost:8080/demo/existing-code"
+}
+```
+
+#### Demo Redirect to Original URL
+
+```
+GET /demo/:shortCode
+```
+
+- **Success:** `302` redirect to the original URL. Click counter increments atomically.
+- **Expired link:** `410 Gone`
+- **Not found:** `404 Not Found`
 
 ## Status Codes
 
