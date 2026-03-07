@@ -43,6 +43,7 @@ src/
 ├── shared/
 │   └── types.ts           # Shared TypeScript interfaces and types
 └── index.ts               # App entry point, middleware setup, DB connection
+tests/                     # Contains all test file ranging from middleware to controllers
 ```
 
 ## Getting Started
@@ -321,6 +322,22 @@ GET /demo/:shortCode
 - **JWT with 1-hour expiry** — Balances security and usability for API tokens.
 - **Atomic `$inc` for click tracking** — Prevents race conditions on concurrent redirects.
 - **Optional fields for customCode and expiresAt** — Core functionality works without them; power users can customize.
+
+## Testing
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+Run a specific test suite:
+
+```bash
+npm test -- --grep "Auth Middleware"
+```
+
+23 tests covering auth middleware, signup, login, stats authorization, URL shortening, redirect, expiration, demo mode, and edge cases. Uses Mocha, Chai, and Sinon with a dedicated test database.
 
 ## License
 

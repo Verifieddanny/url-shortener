@@ -30,7 +30,7 @@ export const shortenUrl = async (
 
     if (urlExists && new Date(urlExists.expiresAt) > new Date()) {
       return res.status(200).json({
-        message: "url exits",
+        message: "url exist",
         url: `${process.env.BASE_URL || "http://localhost:8080/demo"}/${urlExists.shortCode}`,
       });
     }
@@ -45,7 +45,7 @@ export const shortenUrl = async (
     const savedLink = await urlLink.save();
 
     res.status(201).json({
-      messgae: "demo url created",
+      message: "demo url created",
       newUrl: `${process.env.BASE_URL || "http://localhost:8080/demo"}/${savedLink.shortCode}`,
       expiresAt: savedLink.expiresAt.toISOString(),
     });
