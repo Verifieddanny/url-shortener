@@ -111,7 +111,7 @@ describe("Url Shortner Controller", () => {
     expect(next.firstCall.args[0]).to.have.property("statusCode", 404);
   });
 
-  it("should return 410 when link has expired", async () => {
+  it("should return 410(now 302 for FE Integration) when link has expired", async () => {
     const lastYear = new Date();
     lastYear.setFullYear(lastYear.getFullYear() - 1);
 
@@ -147,11 +147,11 @@ describe("Url Shortner Controller", () => {
 
     await openUrl(req, res, () => {});
 
-    expect(res.statusCode).to.be.equals(410);
-    expect((res.send as sinon.SinonSpy).calledOnce).to.be.true;
-    expect((res.send as sinon.SinonSpy).firstCall.args[0]).to.equal(
-      "This resource is permanently gone.",
-    );
+    expect(res.statusCode).to.be.equals(302);
+    // expect((res.send as sinon.SinonSpy).calledOnce).to.be.true;
+    // expect((res.send as sinon.SinonSpy).firstCall.args[0]).to.equal(
+    //   "This resource is permanently gone.",
+    // );
   });
 
   it("should return 301 status code", async () => {

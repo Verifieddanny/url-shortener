@@ -31,7 +31,7 @@ export const shortenUrl = async (
     if (urlExists && new Date(urlExists.expiresAt) > new Date()) {
       return res.status(200).json({
         message: "url exist",
-        url: `${process.env.BASE_URL || "http://localhost:8080/demo"}/${urlExists.shortCode}`,
+        url: `${process.env.BASE_URL || "http://localhost:8080"}/demo/${urlExists.shortCode}`,
       });
     }
 
@@ -46,7 +46,7 @@ export const shortenUrl = async (
 
     res.status(201).json({
       message: "demo url created",
-      newUrl: `${process.env.BASE_URL || "http://localhost:8080/demo"}/${savedLink.shortCode}`,
+      url: `${process.env.BASE_URL || "http://localhost:8080/demo"}/${savedLink.shortCode}`,
       expiresAt: savedLink.expiresAt.toISOString(),
     });
   } catch (error) {
@@ -79,7 +79,8 @@ export const openUrl = async (
     }
 
     if (new Date(LinkedUrl.expiresAt) < new Date()) {
-      return res.status(410).send("This resource is permanently gone.");
+      // return res.status(410).send("This resource is permanently gone.");
+      return res.status(301).redirect("http//localhost:5173/?expired=true");
     }
 
     res.status(301).redirect(LinkedUrl.longUrl);
