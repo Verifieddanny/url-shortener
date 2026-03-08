@@ -33,7 +33,7 @@ const demoLimiter = rateLimit({
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow_Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, PATCH, DELETE",
@@ -47,12 +47,12 @@ app.use("/demo", demoLimiter, demoRouter);
 app.use(limiter);
 app.use("/auth", authLimiter, AuthRouter);
 app.use("/shorten", urlShortnerRouter);
+app.use(rootAccessRouter);
 
-app.use("/", (_req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({ message: "welcome to url shortner" });
 });
 
-app.use(rootAccessRouter);
 
 app.use(
   (

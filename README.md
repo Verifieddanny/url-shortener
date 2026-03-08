@@ -275,7 +275,7 @@ POST demo/shorten
 ```json
 {
   "message": "demo url created",
-  "newUrl": "http://localhost:8080/demo/EvBaP",
+  "url": "http://localhost:8080/demo/EvBaP",
   "expiresAt": "2026-03-12T00:00:00.000Z"
 }
 ```
