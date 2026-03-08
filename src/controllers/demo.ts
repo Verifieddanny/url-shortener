@@ -46,7 +46,7 @@ export const shortenUrl = async (
 
     res.status(201).json({
       message: "demo url created",
-      url: `${process.env.BASE_URL || "http://localhost:8080/demo"}/${savedLink.shortCode}`,
+      url: `${process.env.BASE_URL || "http://localhost:8080"}/demo/${savedLink.shortCode}`,
       expiresAt: savedLink.expiresAt.toISOString(),
     });
   } catch (error) {
