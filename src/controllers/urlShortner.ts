@@ -93,10 +93,13 @@ export const openUrl = async (
     }
 
     if (LinkedUrl.expiresAt && new Date(LinkedUrl.expiresAt) < new Date()) {
-      
       // return res.status(410).send("This resource is permanently gone.");
-      
-      return res.status(302).redirect("http//localhost:5173/dashboard?expired=true");
+
+      return res
+        .status(302)
+        .redirect(
+          `${process.env.FRONT_END_URL || "http//localhost:5173"}/dashboard?expired=true`,
+        );
     }
 
     res.status(301).redirect(LinkedUrl.longUrl);

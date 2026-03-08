@@ -80,7 +80,7 @@ export const openUrl = async (
 
     if (new Date(LinkedUrl.expiresAt) < new Date()) {
       // return res.status(410).send("This resource is permanently gone.");
-      return res.status(301).redirect("http//localhost:5173/?expired=true");
+      return res.status(301).redirect(`${process.env.FRONT_END_URL || "http//localhost:5173"}/?expired=true`);
     }
 
     res.status(301).redirect(LinkedUrl.longUrl);
