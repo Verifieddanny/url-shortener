@@ -20,6 +20,8 @@ A RESTful URL shortener service built with TypeScript, Express, and MongoDB. Fea
 - **Duplicate Detection** — Returns existing short link if the URL was already shortened
 - **Per-User Analytics** — View click stats, creation date, and original URL for your links
 - **Authorization** — Users can only view stats for links they created (`403 Forbidden` otherwise)
+- **Rate Limiting** - Users can't send above 100 requests in 15min else they get a `429 too many request`
+- **Auth Rate Limiting** - Users cant send above 20 requests (to sign up or login) in 15 mins for a tighter security laye else they get a `429 too many request`
 
 ## Project Structure
 
